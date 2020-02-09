@@ -1,0 +1,13 @@
+{
+	"name": "haxe.macro.Defines",
+	"tags": [
+		"haxe", "macro", "define"
+	],
+	"classPath": "src",
+	"description": "Enum Abstract of compiler defines.",
+	"contributors": [
+		"skial"
+	],
+	"version": "0.0.1",
+	"url": "https://github.com/skial/haxe.macro.Defines"
+}

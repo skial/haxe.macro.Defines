@@ -1,0 +1,8 @@
+-lib tink_http
+
+-cp build
+
+--main Entry
+
+-D eval
+--interp
