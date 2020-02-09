@@ -13,51 +13,51 @@ Run `lix install gh:skial/haxe.macro.Defines`.
 ```Haxe
 enum abstract Defines(String) from String to String {
     /**
-		Usage: `-D dce`
-		- - -
-		Set the dead code elimination mode. (default: std)
-		- - -
-		Accepts parameters: mode: std | full | no
-		- - -
-		@see: https://haxe.org/manual/cr-dce.html
-		
-	**/
-	public var Dce = "dce";
+        Usage: `-D dce`
+        - - -
+        Set the dead code elimination mode. (default: std)
+        - - -
+        Accepts parameters: mode: std | full | no
+        - - -
+        @see: https://haxe.org/manual/cr-dce.html
+        
+    **/
+    public var Dce = "dce";
 
     /**
-		Usage: `-D haxe_ver`
-		- - -
-		The current Haxe version value as decimal number. E.g. 3.407 for 3.4.7.
-		
-	**/
-	public var HaxeVer = "haxe_ver";
+        Usage: `-D haxe_ver`
+        - - -
+        The current Haxe version value as decimal number. E.g. 3.407 for 3.4.7.
+        
+    **/
+    public var HaxeVer = "haxe_ver";
 
     /**
-		Usage: `-D haxe`
-		- - -
-		The current Haxe version value in SemVer format.
-		
-	**/
-	public var Haxe = "haxe";
+        Usage: `-D haxe`
+        - - -
+        The current Haxe version value in SemVer format.
+        
+    **/
+    public var Haxe = "haxe";
 
     /**
-		Usage: `-D warn_var_shadowing`
-		- - -
-		Warn about shadowing variable declarations.
-		
-	**/
-	public var WarnVarShadowing = "warn_var_shadowing";
+        Usage: `-D warn_var_shadowing`
+        - - -
+        Warn about shadowing variable declarations.
+        
+    **/
+    public var WarnVarShadowing = "warn_var_shadowing";
 
     function get():String;
-	@:to 
+    @:to 
     function asBool():Bool;
-	@:op(A == B) 
+    @:op(A == B) 
     static function equals(a:Defines, b:Bool);
-	@:op(!A) 
+    @:op(!A) 
     static function negate(a:Defines);
-	@:op(A != B) 
+    @:op(A != B) 
     static function not(a:Defines, b:Bool);
-	@:op(A && B) 
+    @:op(A && B) 
     static function and(a:Defines, b:Bool);
 }
 ```
