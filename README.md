@@ -8,7 +8,7 @@ Run `lix install gh:skial/haxe.macro.Defines`.
 
 ## Overview
 
-> Not all values are listed here, for brevity, check [`Defines.hx`](/blob/master/src/haxe/macro/Defines.hx) for the full list.
+> Not all values are listed here, for brevity, check [`Defines.hx`](/src/haxe/macro/Defines.hx) for the full list.
 
 ```Haxe
 enum abstract Defines(String) from String to String {
