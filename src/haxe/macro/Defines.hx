@@ -994,6 +994,7 @@ package haxe.macro;
 		return haxe.macro.Context.defined(this);
 	}
 	@:op(A == B)
+	@:commutative
 	private static inline function equals(a:Defines, b:Bool) {
 		return a.asBool() == b;
 	}
@@ -1002,10 +1003,12 @@ package haxe.macro;
 		return !a.asBool();
 	}
 	@:op(A != B)
+	@:commutative
 	private static inline function not(a:Defines, b:Bool) {
 		return a.asBool() != b;
 	}
 	@:op(A && B)
+	@:commutative
 	private static inline function and(a:Defines, b:Bool) {
 		return a.asBool() && b;
 	}
