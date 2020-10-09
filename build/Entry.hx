@@ -90,6 +90,9 @@ class Entry {
         //trace( content );
 
         var json:Array<TDefine> = Json.parse( content );
+        var extra:Array<TDefine> = Json.parse( File.getContent('./build/extra.json') );
+
+        json = json.concat( extra );
 
         if (isHttps) {
             if (!DefinesLocal.exists()) DefinesLocal.createDirectory();

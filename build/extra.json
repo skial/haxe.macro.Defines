@@ -1,0 +1,98 @@
+[
+    {
+        "name": "TargetStatic",
+        "define": "target_static",
+        "doc": "",
+        "reserved": true
+    },
+    {
+        "name": "TargetSys",
+        "define": "target_sys",
+        "doc": "",
+        "reserved": true
+    },
+    {
+        "name": "TargetUTF16",
+        "define": "target_utf16",
+        "doc": "",
+        "reserved": true
+    },
+    {
+        "name": "TargetThreaded",
+        "define": "target_threaded",
+        "doc": "",
+        "reserved": true
+    },
+    {
+        "name": "TargetUnicode",
+        "define": "target_unicode",
+        "doc": "",
+        "reserved": true
+    },
+    {
+        "name": "Flash",
+        "define": "flash",
+        "doc": "Targeting the Flash platform.",
+        "reserved": true
+    },
+    {
+        "name": "Neko",
+        "define": "neko",
+        "doc": "Targeting the Neko platform.",
+        "reserved": true
+    },
+    {
+        "name": "JavaScript",
+        "define": "js",
+        "doc": "Targeting the JavaScript platform.",
+        "reserved": true
+    },
+    {
+        "name": "Lua",
+        "define": "lua",
+        "doc": "Targeting the Lua platform.",
+        "reserved": true
+    },
+    {
+        "name": "Php",
+        "define": "php",
+        "doc": "Targeting the Php platform.",
+        "reserved": true
+    },
+    {
+        "name": "Cpp",
+        "define": "cpp",
+        "doc": "Targeting the C++ platform.",
+        "reserved": true
+    },
+    {
+        "name": "CSharp",
+        "define": "cs",
+        "doc": "Targeting the CSharp platform.",
+        "reserved": true
+    },
+    {
+        "name": "Java",
+        "define": "java",
+        "doc": "Targeting the Java platform.",
+        "reserved": true
+    },
+    {
+        "name": "Python",
+        "define": "python",
+        "doc": "Targeting the Python platform.",
+        "reserved": true
+    },
+    {
+        "name": "Hashlink",
+        "define": "hl",
+        "doc": "Targeting the Hashlink platform.",
+        "reserved": true
+    },
+    {
+        "name": "Eval",
+        "define": "eval",
+        "doc": "Currently running in the internal macro system.",
+        "reserved": true
+    }
+]
