@@ -71,6 +71,8 @@ package haxe.macro;
 		- - -
 		The C# version to target.
 		- - -
+		Accepts parameters: version
+		- - -
 		Platform: cs
 		
 	**/
@@ -172,6 +174,8 @@ package haxe.macro;
 		Usage: `-D dump_path`
 		- - -
 		Path to generate dumps to (default: "dump").
+		- - -
+		Accepts parameters: path
 		
 	**/
 	public var DumpPath = "dump_path";
@@ -357,6 +361,17 @@ package haxe.macro;
 	**/
 	public var Haxe = "haxe";
 	/**
+		Usage: `-D hl_ver`
+		- - -
+		The HashLink version to target. (default: 1.10.0)
+		- - -
+		Accepts parameters: version
+		- - -
+		Platform: hl
+		
+	**/
+	public var HlVer = "hl_ver";
+	/**
 		Usage: `-D hxcpp_api_level`
 		- - -
 		Provided to allow compatibility between hxcpp versions.
@@ -409,6 +424,15 @@ package haxe.macro;
 	**/
 	public var Interp = "interp";
 	/**
+		Usage: `-D jar-legacy-loader`
+		- - -
+		Use the legacy loader to load .jar files on the JVM target.
+		- - -
+		Platform: java
+		
+	**/
+	public var JarLegacyLoader = "jar-legacy-loader";
+	/**
 		Usage: `-D java_ver`
 		- - -
 		Sets the Java version to be targeted.
@@ -433,7 +457,7 @@ package haxe.macro;
 		- - -
 		Generate JS compliant with given ES standard version. (default: 5)
 		- - -
-		Accepts parameters: version number
+		Accepts parameters: version: 3 | 5 | 6
 		- - -
 		Platform: js
 		- - -
@@ -486,6 +510,24 @@ package haxe.macro;
 		
 	**/
 	public var Jvm = "jvm";
+	/**
+		Usage: `-D jvm.compression-level`
+		- - -
+		Set the compression level of the generated file between 0 (no compression) and 9 (highest compression). Default: 6
+		- - -
+		Platform: java
+		
+	**/
+	public var JvmCompressionLevel = "jvm.compression-level";
+	/**
+		Usage: `-D jvm.dynamic-level`
+		- - -
+		Controls the amount of dynamic support code being generated. 0 = none, 1 = field read/write optimization (default), 2 = compile-time method closures
+		- - -
+		Platform: java
+		
+	**/
+	public var JvmDynamicLevel = "jvm.dynamic-level";
 	/**
 		Usage: `-D keep_old_output`
 		- - -
@@ -619,13 +661,6 @@ package haxe.macro;
 	**/
 	public var NoCompilation = "no-compilation";
 	/**
-		Usage: `-D no_copt`
-		- - -
-		Disable completion optimization (for debug purposes).
-		
-	**/
-	public var NoCOpt = "no_copt";
-	/**
 		Usage: `-D no_debug`
 		- - -
 		Remove all debug macros from cpp output.
@@ -714,13 +749,6 @@ package haxe.macro;
 		
 	**/
 	public var Objc = "objc";
-	/**
-		Usage: `-D old-constructor-inline`
-		- - -
-		Use old constructor inlining logic (from Haxe 3.4.2) instead of the reworked version.
-		
-	**/
-	public var OldConstructorInline = "old-constructor-inline";
 	/**
 		Usage: `-D old-error-format`
 		- - -
@@ -986,6 +1014,147 @@ package haxe.macro;
 		
 	**/
 	public var WarnVarShadowing = "warn_var_shadowing";
+	/**
+		Usage: `-D no_tre`
+		- - -
+		Disable tail recursion elimination.
+		
+	**/
+	public var NoTre = "no_tre";
+	/**
+		Usage: `-D target_static`
+		- - -
+		
+		
+	**/
+	public var TargetStatic = "target_static";
+	/**
+		Usage: `-D target_sys`
+		- - -
+		
+		
+	**/
+	public var TargetSys = "target_sys";
+	/**
+		Usage: `-D target_utf16`
+		- - -
+		
+		
+	**/
+	public var TargetUTF16 = "target_utf16";
+	/**
+		Usage: `-D target_threaded`
+		- - -
+		
+		
+	**/
+	public var TargetThreaded = "target_threaded";
+	/**
+		Usage: `-D target_unicode`
+		- - -
+		
+		
+	**/
+	public var TargetUnicode = "target_unicode";
+	/**
+		Usage: `-D flash`
+		- - -
+		Targeting the Flash platform.
+		- - -
+		Platform: flash
+		
+	**/
+	public var Flash = "flash";
+	/**
+		Usage: `-D neko`
+		- - -
+		Targeting the Neko platform.
+		- - -
+		Platform: neko
+		
+	**/
+	public var Neko = "neko";
+	/**
+		Usage: `-D js`
+		- - -
+		Targeting the JavaScript platform.
+		- - -
+		Platform: js
+		
+	**/
+	public var JavaScript = "js";
+	/**
+		Usage: `-D lua`
+		- - -
+		Targeting the Lua platform.
+		- - -
+		Platform: lua
+		
+	**/
+	public var Lua = "lua";
+	/**
+		Usage: `-D php`
+		- - -
+		Targeting the Php platform.
+		- - -
+		Platform: php
+		
+	**/
+	public var Php = "php";
+	/**
+		Usage: `-D cpp`
+		- - -
+		Targeting the C++ platform.
+		- - -
+		Platform: cpp
+		
+	**/
+	public var Cpp = "cpp";
+	/**
+		Usage: `-D cs`
+		- - -
+		Targeting the CSharp platform.
+		- - -
+		Platform: cs
+		
+	**/
+	public var CSharp = "cs";
+	/**
+		Usage: `-D java`
+		- - -
+		Targeting the Java platform.
+		- - -
+		Platform: java
+		
+	**/
+	public var Java = "java";
+	/**
+		Usage: `-D python`
+		- - -
+		Targeting the Python platform.
+		- - -
+		Platform: python
+		
+	**/
+	public var Python = "python";
+	/**
+		Usage: `-D hl`
+		- - -
+		Targeting the Hashlink platform.
+		- - -
+		Platform: hl
+		
+	**/
+	public var Hashlink = "hl";
+	/**
+		Usage: `-D eval`
+		- - -
+		Currently running in the internal macro system.
+		- - -
+		Platform: eval
+		
+	**/
+	public var Eval = "eval";
 	public inline function get():String {
 		return haxe.macro.Context.definedValue(this);
 	}
