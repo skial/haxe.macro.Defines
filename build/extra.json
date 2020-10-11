@@ -33,66 +33,77 @@
         "name": "Flash",
         "define": "flash",
         "doc": "Targeting the Flash platform.",
+        "platforms": ["flash"],
         "reserved": true
     },
     {
         "name": "Neko",
         "define": "neko",
         "doc": "Targeting the Neko platform.",
+        "platforms": ["neko"],
         "reserved": true
     },
     {
         "name": "JavaScript",
         "define": "js",
         "doc": "Targeting the JavaScript platform.",
+        "platforms": ["js"],
         "reserved": true
     },
     {
         "name": "Lua",
         "define": "lua",
         "doc": "Targeting the Lua platform.",
+        "platforms": ["lua"],
         "reserved": true
     },
     {
         "name": "Php",
         "define": "php",
         "doc": "Targeting the Php platform.",
+        "platforms": ["php"],
         "reserved": true
     },
     {
         "name": "Cpp",
         "define": "cpp",
         "doc": "Targeting the C++ platform.",
+        "platforms": ["cpp"],
         "reserved": true
     },
     {
         "name": "CSharp",
         "define": "cs",
         "doc": "Targeting the CSharp platform.",
+        "platforms": ["cs"],
         "reserved": true
     },
     {
         "name": "Java",
         "define": "java",
         "doc": "Targeting the Java platform.",
+        "platforms": ["java"],
         "reserved": true
     },
     {
         "name": "Python",
         "define": "python",
         "doc": "Targeting the Python platform.",
+        "platforms": ["python"],
         "reserved": true
     },
     {
         "name": "Hashlink",
         "define": "hl",
         "doc": "Targeting the Hashlink platform.",
+        "platforms": ["hl"],
         "reserved": true
     },
     {
         "name": "Eval",
         "define": "eval",
         "doc": "Currently running in the internal macro system.",
+        "platforms": ["eval"],
         "reserved": true
     }
 ]

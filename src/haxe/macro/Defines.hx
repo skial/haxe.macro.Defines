@@ -1060,6 +1060,8 @@ package haxe.macro;
 		Usage: `-D flash`
 		- - -
 		Targeting the Flash platform.
+		- - -
+		Platform: flash
 		
 	**/
 	public var Flash = "flash";
@@ -1067,6 +1069,8 @@ package haxe.macro;
 		Usage: `-D neko`
 		- - -
 		Targeting the Neko platform.
+		- - -
+		Platform: neko
 		
 	**/
 	public var Neko = "neko";
@@ -1074,6 +1078,8 @@ package haxe.macro;
 		Usage: `-D js`
 		- - -
 		Targeting the JavaScript platform.
+		- - -
+		Platform: js
 		
 	**/
 	public var JavaScript = "js";
@@ -1081,6 +1087,8 @@ package haxe.macro;
 		Usage: `-D lua`
 		- - -
 		Targeting the Lua platform.
+		- - -
+		Platform: lua
 		
 	**/
 	public var Lua = "lua";
@@ -1088,6 +1096,8 @@ package haxe.macro;
 		Usage: `-D php`
 		- - -
 		Targeting the Php platform.
+		- - -
+		Platform: php
 		
 	**/
 	public var Php = "php";
@@ -1095,6 +1105,8 @@ package haxe.macro;
 		Usage: `-D cpp`
 		- - -
 		Targeting the C++ platform.
+		- - -
+		Platform: cpp
 		
 	**/
 	public var Cpp = "cpp";
@@ -1102,6 +1114,8 @@ package haxe.macro;
 		Usage: `-D cs`
 		- - -
 		Targeting the CSharp platform.
+		- - -
+		Platform: cs
 		
 	**/
 	public var CSharp = "cs";
@@ -1109,6 +1123,8 @@ package haxe.macro;
 		Usage: `-D java`
 		- - -
 		Targeting the Java platform.
+		- - -
+		Platform: java
 		
 	**/
 	public var Java = "java";
@@ -1116,6 +1132,8 @@ package haxe.macro;
 		Usage: `-D python`
 		- - -
 		Targeting the Python platform.
+		- - -
+		Platform: python
 		
 	**/
 	public var Python = "python";
@@ -1123,6 +1141,8 @@ package haxe.macro;
 		Usage: `-D hl`
 		- - -
 		Targeting the Hashlink platform.
+		- - -
+		Platform: hl
 		
 	**/
 	public var Hashlink = "hl";
@@ -1130,6 +1150,8 @@ package haxe.macro;
 		Usage: `-D eval`
 		- - -
 		Currently running in the internal macro system.
+		- - -
+		Platform: eval
 		
 	**/
 	public var Eval = "eval";
