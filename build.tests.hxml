@@ -1,0 +1,7 @@
+--class-path tests
+--class-path src
+
+--main Main
+-D swf-compress-level=7
+
+--interp

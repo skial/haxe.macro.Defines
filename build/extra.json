@@ -1,31 +1,56 @@
 [
     {
         "name": "TargetStatic",
-        "define": "target_static",
+        "define": "target.static",
         "doc": "",
         "reserved": true
     },
     {
         "name": "TargetSys",
-        "define": "target_sys",
+        "define": "target.sys",
         "doc": "",
         "reserved": true
     },
     {
         "name": "TargetUTF16",
-        "define": "target_utf16",
+        "define": "target.utf16",
         "doc": "",
         "reserved": true
     },
     {
         "name": "TargetThreaded",
-        "define": "target_threaded",
+        "define": "target.threaded",
         "doc": "",
         "reserved": true
     },
     {
         "name": "TargetUnicode",
-        "define": "target_unicode",
+        "define": "target.unicode",
+        "doc": "",
+        "reserved": true
+    },
+    {
+        "name": "UseRttiDoc",
+        "define": "use_rtti_doc",
+        "doc": "",
+        "reserved": true
+    },
+    {
+        "name": "DisplayDetails",
+        "define": "display-details",
+        "doc": "",
+        "links": ["https://haxe.org/manual/cr-completion-field-access.html#since-haxe-3.2.0"],
+        "reserved": true
+    },
+    {
+        "name": "NoCOpt",
+        "define": "no_copt",
+        "doc": "",
+        "reserved": true
+    },
+    {
+        "name": "TargetAtomics",
+        "define": "target.atomics",
         "doc": "",
         "reserved": true
     },
