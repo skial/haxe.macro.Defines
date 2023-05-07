@@ -1,8 +1,6 @@
 package ;
 
-import sys.Http;
 import haxe.Json;
-import haxe.Timer;
 import sys.io.File;
 import haxe.macro.Expr;
 import haxe.macro.Context;
@@ -27,8 +25,8 @@ class Entry {
     public static final printer:Printer = new Printer();
 
     public static var DefinesJson:String =
-    if (Context.defined('defines.json')) {
-        var value = Context.definedValue('defines.json').normalize();
+    if (Context.defined('defines.path')) {
+        var value = Context.definedValue('defines.path').normalize();
 
         if (!value.isAbsolute()) {
             value = FileSystem.fullPath(Context.resolvePath(value));
@@ -37,8 +35,7 @@ class Entry {
         value;
 
     } else {
-        // TODO: Really needs to be `https` but eval doesnt support ssl connections.
-        'https://raw.githubusercontent.com/HaxeFoundation/haxe/development/src-json/define.json';
+        Context.fatalError('Download define.json from https://raw.githubusercontent.com/HaxeFoundation/haxe/development/src-json/define.json and add `-D defines.path=<path>` to the build command.', Context.currentPos());
 
     }
     public static final cwd:String = Sys.getCwd();
@@ -47,82 +44,151 @@ class Entry {
     public static var outputPath = '$cwd/src/haxe/macro/Defines.hx';
 
     public static function main() {
-        // TODO: Should be `https`.
-        var isHttps = DefinesJson.startsWith('https:');
+        var debug = Context.defined('debug');
 
-        if (isHttps && FileSystem.exists(DefinesLocal + 'define.json')) {
+        if (FileSystem.exists(DefinesLocal + 'define.json')) {
             DefinesJson = DefinesLocal + 'define.json';
-            isHttps = false;
         }
 
-        var wait = true;
-        var content = '';
-
-        if (isHttps) {
-            // TODO: Once eval supports https connections, drop tink_* libs.
-            //Http.requestUrl(DefinesJson);
-
-            tink.http.Client.fetch(DefinesJson, {client:Curl}).all().handle( o -> switch o {
-                case Success(response):
-                    wait = false;
-                    content = response.body.toString();
-
-                case Failure(e):
-                    wait = false;
-                    Context.fatalError('HTTPS error: $e', Context.currentPos());
-
-            } );
-
-        } else {
-            wait = false;
-            content = File.getContent(DefinesJson);
-
-        }
-
-        var timestamp = Timer.stamp();
-        while (wait) {
-            if ((Timer.stamp() - timestamp) > 4) {
-                Context.fatalError('Failed to load `defines.json` via https request.', Context.currentPos());
-                break;
-            }
-        }
-        
-        //trace( content );
-
+        var content = File.getContent(DefinesJson);
         var json:Array<TDefine> = Json.parse( content );
         var extra:Array<TDefine> = Json.parse( File.getContent('./build/extra.json') );
 
         json = json.concat( extra );
 
-        if (isHttps) {
-            if (!DefinesLocal.exists()) DefinesLocal.createDirectory();
-            File.saveContent( DefinesLocal + '/define.json', content );
-
-        }
+        // https://regex101.com/r/QNtYMy/1
+        //                        ( name        )          (   x.x.x  ) (  0-100      ) (   value0 | valueN           )
+        var paramEReg = new EReg("([a-zA-Z\\- ]+)(?:\\: *)?(?:([x\\.]+)|([0-9]+-[0-9]+)|([a-zA-Z \\|]*[a-zA-Z0-9 \\|]+))?", "");
 
         var pos = Context.currentPos();
+        var tds:Array<TypeDefinition> = [];
         var fields = [];
         for (define in json) {
-            //trace( define );
-            var name = define.name;
+            var defineName = define.name;
             var expr = {expr:EConst(CString(define.define)), pos:pos};
             var field = (macro class {
-                public var $name = $expr;
+                public var $defineName = $expr;
             }).fields[0];
-            field.doc = 'Usage: `-D ${define.define}`\n- - -\n${define.doc}\n';
-            if (define.devcomment != null) field.doc += '- - -\n${define.devcomment}\n';
-            if (define.params != null) field.doc += '- - -\nAccepts parameters: ${define.params.join('|')}\n';
-            if (define.platforms != null) field.doc += '- - -\nPlatform${define.platforms.length == 0 ? 's' :''}: ${define.platforms.join('|')}\n';
-            if (define.links != null) field.doc += '- - -\n@see: ${define.links.join('|')}\n';
 
-            //trace( printer.printField( field ) );
-            //break;
+            field.doc = 'Usage: `-D ${define.define}`\n${define.doc}';
+            if (define.devcomment != null) field.doc += '\n${define.devcomment}';
+
+            if (define.params != null) {
+                field.doc += '\nAccepts parameters: ${define.params.join('|')}';
+                var p = define.params[0];
+                if (paramEReg.match(p)) {
+                    function mkUpper(value:String):String {
+                        if (value.charCodeAt(0) > 'Z'.code) value = String.fromCharCode( value.charCodeAt(0) - 32  ) + value.substring(1);
+                        return value;
+                    }
+                    function mkName(value:String, prefix:String = null):String {
+                        value = mkUpper(value);
+                        if (prefix != null) prefix = mkUpper(prefix);
+                        if ('0'.code <= value.charCodeAt(0) && value.charCodeAt(0) <= '9'.code && prefix != null) value = prefix + value;
+                        return value;
+                    }
+                    function mkTypeName(value:String):String {
+                        return mkName(value + 'Values');
+                    }
+                    
+                    switch ([for (i in 1...5) paramEReg.matched(i)]) {
+                        case [name, pattern, null, null] if (name != null && pattern != null):
+                            //trace( name, pattern );
+
+                        case [name, null, range, null] if (name != null && range != null):
+                            //trace(name, range );
+
+                            var typeName = mkName(defineName + 'Range');
+                            var ctype = TPath({name:typeName, pack:[]});
+                            var range = range.split('-').map(Std.parseInt);
+
+                            if (tds.filter(td -> td.name == typeName).length == 0) {
+                                var td = (macro class $typeName {
+                                    public static inline function get(self:DefinedValue<$ctype>):Null<$ctype> {
+                                        return haxe.macro.Context.definedValue(self);
+                                    }
+                                });
+                                for (i in range[0]...range[1]+1) {
+                                    var name = mkName('$i', name);
+                                    td.fields.push( (macro class {
+                                        public var $name = $v{'$i'};
+                                    }).fields[0] );
+                                }
+                                
+                                td.kind = TDAbstract(macro:String, [macro:String], [macro:String, macro:Defines]);
+                                td.meta.push({name:':enum', pos:td.pos});
+                                td.pack = ['haxe', 'macro'];
+    
+                                if (debug) trace( new haxe.macro.Printer().printTypeDefinition(td) );
+    
+                                tds.push( td );
+
+                            }
+
+                            // Overwrite `Defines` field.
+                            var doc = field.doc;
+                            field = (macro class {
+                                public var $defineName:DefinedValue<$ctype> = $expr;
+                            }).fields[0];
+                            field.doc = doc;
+
+                        case [name, null, null, _.split('|').map(s->s.trim()) => values] if (name != null && values != null):
+                            //trace( name, values );
+                            var typeName = mkTypeName(defineName);
+                            var ctype = TPath({name:typeName, pack:[]});
+                            var td = (macro class $typeName {
+                                public static inline function get(self:DefinedValue<$ctype>):Null<$ctype> {
+                                    return haxe.macro.Context.definedValue(self);
+                                }
+                            });
+
+                            for (value in values) {
+                                var name = mkName(value, name);
+                                td.fields.push( (macro class {
+                                    public var $name = $v{value};
+                                }).fields[0] );
+                            }
+                            
+                            td.kind = TDAbstract(macro:String, [macro:String], [macro:String, macro:Defines]);
+                            td.meta.push({name:':enum', pos:td.pos});
+                            td.pack = ['haxe', 'macro'];
+
+                            if (debug) trace( new haxe.macro.Printer().printTypeDefinition(td) );
+
+                            tds.push( td );
+
+                            // Overwrite `Defines` field.
+                            var doc = field.doc;
+                            field = (macro class {
+                                public var $defineName:DefinedValue<$ctype> = $expr;
+                            }).fields[0];
+                            field.doc = doc;
+
+                        case [name, null, null, null]:
+                            //trace( name );
+
+                        case _:
+                            throw 'failed to parse: $p';
+
+                    }
+                }
+            }
+
+            if (define.platforms != null) field.doc += '\nPlatform${define.platforms.length == 0 ? 's' :''}: ${define.platforms.join('|')}';
+            if (define.links != null) field.doc += '\n@see: ${define.links.join('|')}';
+
+            if (field.doc != null) field.doc = field.doc.trim();
+
             fields.push( field );
 
         }
 
+        var td = (macro class DefinedValue<T> {});
+        td.kind = TDAbstract(macro:String, [macro:String], [macro:String, macro:Defines]);
+        tds.push( td );
+
         var td:TypeDefinition = macro class {
-            public inline function get():String {
+            public inline function get():Null<String> {
                 return haxe.macro.Context.definedValue(this);
             }
 
@@ -145,20 +211,33 @@ class Entry {
             @:op(A && B) @:commutative private static inline function and(a:Defines, b:Bool) {
                 return a.asBool() && b;
             }
+            @:op(A || B) @:commutative private static inline function or(a:Defines, b:Bool) {
+                return a.asBool() || b;
+            }
         }
-        td.doc = 'Do not edit this file is auto-generated.\nBuilt off `define.json` found at https://raw.githubusercontent.com/HaxeFoundation/haxe/development/src-json/define.json';
+        td.doc = '--- DO NOT EDIT ---\nThis file is auto-generated.\nBuilt from `define.json` found at https://raw.githubusercontent.com/HaxeFoundation/haxe/development/src-json/define.json';
         td.pack = ['haxe', 'macro'];
         td.name = 'Defines';
         td.kind = TDAbstract(macro:String, [macro:String], [macro:String]);
         td.meta = [
-            {name:':enum', params:[], pos:td.pos}, 
+            //{name:':haxe.warning', params:[macro -101], pos:td.pos},
             {name:':forward', params:[], pos:td.pos}, 
-            {name:':forwardStatics', params:[], pos:td.pos}
+            {name:':forwardStatics', params:[], pos:td.pos},
+            // Has to be last so prints out as `enum abstract`
+            {name:':enum', params:[], pos:td.pos}, 
         ];
         td.fields = fields.concat(td.fields);
 
+        var types = new StringBuf();
+        types.add( printer.printTypeDefinition(td, true).replace('@:enum', 'enum') );
+        types.add('\n');
+        for (td in tds) {
+            types.add( printer.printTypeDefinition(td, false).replace('@:enum', 'enum') );
+            types.add('\n');
+        }
+
         if (!outputPath.directory().exists()) outputPath.directory().createDirectory();
-        File.saveContent(outputPath, printer.printTypeDefinition(td, true));
+        File.saveContent(outputPath, types.toString());
     }
 
 }

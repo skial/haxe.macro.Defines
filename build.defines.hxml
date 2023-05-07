@@ -1,8 +1,7 @@
--lib tink_http
-
--cp build
+--class-path build
+#--debug
+-D eval-pretty-print
 
 --main Entry
 
--D eval
 --interp
