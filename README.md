@@ -13,40 +13,30 @@ Run `lix install gh:skial/haxe.macro.Defines`.
 ```Haxe
 enum abstract Defines(String) from String to String {
     /**
-        Usage: `-D dce`
-        - - -
-        Set the dead code elimination mode. (default: std)
-        - - -
-        Accepts parameters: mode: std | full | no
-        - - -
-        @see: https://haxe.org/manual/cr-dce.html
-        
-    **/
-    public var Dce = "dce";
+		Usage: `-D dce`
+		Set the dead code elimination mode. (default: std)
+		Accepts parameters: mode: std | full | no
+		@see: https://haxe.org/manual/cr-dce.html
+	**/
+	public var Dce:DefinedValue<DceValues> = "dce";
 
     /**
-        Usage: `-D haxe_ver`
-        - - -
-        The current Haxe version value as decimal number. E.g. 3.407 for 3.4.7.
-        
-    **/
-    public var HaxeVer = "haxe_ver";
+		Usage: `-D haxe-ver`
+		The current Haxe version value as decimal number. E.g. 3.407 for 3.4.7.
+	**/
+    public var HaxeVer = "haxe-ver";
 
     /**
-        Usage: `-D haxe`
-        - - -
-        The current Haxe version value in SemVer format.
-        
-    **/
+		Usage: `-D haxe`
+		The current Haxe version value in SemVer format.
+	**/
     public var Haxe = "haxe";
 
     /**
-        Usage: `-D warn_var_shadowing`
-        - - -
-        Warn about shadowing variable declarations.
-        
-    **/
-    public var WarnVarShadowing = "warn_var_shadowing";
+		Usage: `-D warn-var-shadowing`
+		Warn about shadowing variable declarations.
+	**/
+    public var WarnVarShadowing = "warn-var-shadowing";
 
     function get():String;
     @:to 
@@ -59,22 +49,21 @@ enum abstract Defines(String) from String to String {
     static function not(a:Defines, b:Bool);
     @:op(A && B) 
     static function and(a:Defines, b:Bool);
+    @:op(A || B) 
+    static function or(a:Defines, b:Bool);
 }
+enum abstract DceValues(String) from String to String to Defines {
+	public static inline function get(self:DefinedValue<DceValues>):Null<DceValues> {
+		return haxe.macro.Context.definedValue(self);
+	}
+	public var Std = "std";
+	public var Full = "full";
+	public var No = "no";
+}
+abstract DefinedValue<T>(String) from String to String to Defines {}
 ```
 
 ## Building `Defines.hx`
 
-The lib includes `build.defines.hxml`, which will download the latest `define.json` file and overwrite `src/haxe/macro/Defines.hx`.
-
-### Dependencies
-
-#### Haxe dependencies
-Use [`lix download`](https://github.com/lix-pm/lix.client) to fetch and install the dependencies used for this repo.
-
-#### Curl
-Make sure you have `curl` available as that is the Http client used to fetch `define.json`.
-
-#### Build defines
-If you don't have `curl`, download `define.json` yourself and copy the path. Then
-run `haxe build.defines.hxml -D defines.json=path/to/define.json`.
+Download `define.json` yourself and copy the path. Then run `haxe build.defines.hxml -D defines.path=path/to/define.json`.
 
