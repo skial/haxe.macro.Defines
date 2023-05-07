@@ -221,17 +221,18 @@ class Entry {
         td.kind = TDAbstract(macro:String, [macro:String], [macro:String]);
         td.meta = [
             //{name:':haxe.warning', params:[macro -101], pos:td.pos},
-            {name:':enum', params:[], pos:td.pos}, 
             {name:':forward', params:[], pos:td.pos}, 
-            {name:':forwardStatics', params:[], pos:td.pos}
+            {name:':forwardStatics', params:[], pos:td.pos},
+            // Has to be last so prints out as `enum abstract`
+            {name:':enum', params:[], pos:td.pos}, 
         ];
         td.fields = fields.concat(td.fields);
 
         var types = new StringBuf();
-        types.add( printer.printTypeDefinition(td, true));
+        types.add( printer.printTypeDefinition(td, true).replace('@:enum', 'enum') );
         types.add('\n');
         for (td in tds) {
-            types.add( printer.printTypeDefinition(td, false) );
+            types.add( printer.printTypeDefinition(td, false).replace('@:enum', 'enum') );
             types.add('\n');
         }
 

@@ -4,7 +4,7 @@ package haxe.macro;
 	This file is auto-generated.
 	Built from `define.json` found at https://raw.githubusercontent.com/HaxeFoundation/haxe/development/src-json/define.json
 **/
-@:enum @:forward @:forwardStatics abstract Defines(String) from String to String {
+@:forward @:forwardStatics enum abstract Defines(String) from String to String {
 	/**
 		Usage: `-D absolute-path`
 		Print absolute file path in trace output.
@@ -891,7 +891,7 @@ package haxe.macro;
 		return a.asBool() || b;
 	}
 }
-@:enum abstract AnalyzerTimesValues(String) from String to String to Defines {
+enum abstract AnalyzerTimesValues(String) from String to String to Defines {
 	public static inline function get(self:DefinedValue<AnalyzerTimesValues>):Null<AnalyzerTimesValues> {
 		return haxe.macro.Context.definedValue(self);
 	}
@@ -899,7 +899,7 @@ package haxe.macro;
 	public var Level1 = "1";
 	public var Level2 = "2";
 }
-@:enum abstract DceValues(String) from String to String to Defines {
+enum abstract DceValues(String) from String to String to Defines {
 	public static inline function get(self:DefinedValue<DceValues>):Null<DceValues> {
 		return haxe.macro.Context.definedValue(self);
 	}
@@ -907,7 +907,7 @@ package haxe.macro;
 	public var Full = "full";
 	public var No = "no";
 }
-@:enum abstract DumpValues(String) from String to String to Defines {
+enum abstract DumpValues(String) from String to String to Defines {
 	public static inline function get(self:DefinedValue<DumpValues>):Null<DumpValues> {
 		return haxe.macro.Context.definedValue(self);
 	}
@@ -916,7 +916,7 @@ package haxe.macro;
 	public var Position = "position";
 	public var Legacy = "legacy";
 }
-@:enum abstract JavaVerRange(String) from String to String to Defines {
+enum abstract JavaVerRange(String) from String to String to Defines {
 	public static inline function get(self:DefinedValue<JavaVerRange>):Null<JavaVerRange> {
 		return haxe.macro.Context.definedValue(self);
 	}
@@ -924,7 +924,7 @@ package haxe.macro;
 	public var Version6 = "6";
 	public var Version7 = "7";
 }
-@:enum abstract JsEsValues(String) from String to String to Defines {
+enum abstract JsEsValues(String) from String to String to Defines {
 	public static inline function get(self:DefinedValue<JsEsValues>):Null<JsEsValues> {
 		return haxe.macro.Context.definedValue(self);
 	}
@@ -932,7 +932,7 @@ package haxe.macro;
 	public var Version5 = "5";
 	public var Version6 = "6";
 }
-@:enum abstract NetVerRange(String) from String to String to Defines {
+enum abstract NetVerRange(String) from String to String to Defines {
 	public static inline function get(self:DefinedValue<NetVerRange>):Null<NetVerRange> {
 		return haxe.macro.Context.definedValue(self);
 	}
@@ -968,7 +968,7 @@ package haxe.macro;
 	public var Version49 = "49";
 	public var Version50 = "50";
 }
-@:enum abstract SwfCompressLevelRange(String) from String to String to Defines {
+enum abstract SwfCompressLevelRange(String) from String to String to Defines {
 	public static inline function get(self:DefinedValue<SwfCompressLevelRange>):Null<SwfCompressLevelRange> {
 		return haxe.macro.Context.definedValue(self);
 	}
@@ -982,7 +982,7 @@ package haxe.macro;
 	public var Level8 = "8";
 	public var Level9 = "9";
 }
-@:enum abstract MessageReportingValues(String) from String to String to Defines {
+enum abstract MessageReportingValues(String) from String to String to Defines {
 	public static inline function get(self:DefinedValue<MessageReportingValues>):Null<MessageReportingValues> {
 		return haxe.macro.Context.definedValue(self);
 	}
@@ -990,7 +990,7 @@ package haxe.macro;
 	public var Pretty = "pretty";
 	public var Indent = "indent";
 }
-@:enum abstract MessageLogFormatValues(String) from String to String to Defines {
+enum abstract MessageLogFormatValues(String) from String to String to Defines {
 	public static inline function get(self:DefinedValue<MessageLogFormatValues>):Null<MessageLogFormatValues> {
 		return haxe.macro.Context.definedValue(self);
 	}
