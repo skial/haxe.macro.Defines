@@ -66,4 +66,3 @@ abstract DefinedValue<T>(String) from String to String to Defines {}
 ## Building `Defines.hx`
 
 Download `define.json` yourself and copy the path. Then run `haxe build.defines.hxml -D defines.path=path/to/define.json`.
-
