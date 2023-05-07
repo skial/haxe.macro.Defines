@@ -12,7 +12,7 @@ Run `lix install gh:skial/haxe.macro.Defines`.
 
 ```Haxe
 enum abstract Defines(String) from String to String {
-    /**
+	/**
 		Usage: `-D dce`
 		Set the dead code elimination mode. (default: std)
 		Accepts parameters: mode: std | full | no
@@ -20,37 +20,37 @@ enum abstract Defines(String) from String to String {
 	**/
 	public var Dce:DefinedValue<DceValues> = "dce";
 
-    /**
+	/**
 		Usage: `-D haxe-ver`
 		The current Haxe version value as decimal number. E.g. 3.407 for 3.4.7.
 	**/
-    public var HaxeVer = "haxe-ver";
+	public var HaxeVer = "haxe-ver";
 
-    /**
+	/**
 		Usage: `-D haxe`
 		The current Haxe version value in SemVer format.
 	**/
-    public var Haxe = "haxe";
+	public var Haxe = "haxe";
 
-    /**
+	/**
 		Usage: `-D warn-var-shadowing`
 		Warn about shadowing variable declarations.
 	**/
-    public var WarnVarShadowing = "warn-var-shadowing";
+	public var WarnVarShadowing = "warn-var-shadowing";
 
-    function get():String;
-    @:to 
-    function asBool():Bool;
-    @:op(A == B) 
-    static function equals(a:Defines, b:Bool);
-    @:op(!A) 
-    static function negate(a:Defines);
-    @:op(A != B) 
-    static function not(a:Defines, b:Bool);
-    @:op(A && B) 
-    static function and(a:Defines, b:Bool);
-    @:op(A || B) 
-    static function or(a:Defines, b:Bool);
+	function get():String;
+	@:to 
+	function asBool():Bool;
+	@:op(A == B) 
+	static function equals(a:Defines, b:Bool);
+	@:op(!A) 
+	static function negate(a:Defines);
+	@:op(A != B) 
+	static function not(a:Defines, b:Bool);
+	@:op(A && B) 
+	static function and(a:Defines, b:Bool);
+	@:op(A || B) 
+	static function or(a:Defines, b:Bool);
 }
 enum abstract DceValues(String) from String to String to Defines {
 	public static inline function get(self:DefinedValue<DceValues>):Null<DceValues> {
