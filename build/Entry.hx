@@ -144,6 +144,7 @@ class Entry {
 
                             for (value in values) {
                                 var name = mkName(value, name);
+                                if (name == 'Std') name = 'Standard'; // Prevents `Std` overriding the `Std` type.
                                 td.fields.push( (macro class {
                                     public var $name = $v{value};
                                 }).fields[0] );
