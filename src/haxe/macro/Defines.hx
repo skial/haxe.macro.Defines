@@ -903,7 +903,7 @@ enum abstract DceValues(String) from String to String to Defines {
 	public static inline function get(self:DefinedValue<DceValues>):Null<DceValues> {
 		return haxe.macro.Context.definedValue(self);
 	}
-	public var Std = "std";
+	public var Standard = "std";
 	public var Full = "full";
 	public var No = "no";
 }
