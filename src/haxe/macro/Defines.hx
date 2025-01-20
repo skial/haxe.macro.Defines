@@ -44,23 +44,10 @@ package haxe.macro;
 	**/
 	public var CoreApi = "core-api";
 	/**
-		Usage: `-D core-api-serialize`
-		Mark some generated core API classes with the `Serializable` attribute on C#.
-		Platform: cs
-	**/
-	public var CoreApiSerialize = "core-api-serialize";
-	/**
 		Usage: `-D cppia`
 		Generate cpp instruction assembly.
 	**/
 	public var Cppia = "cppia";
-	/**
-		Usage: `-D cs-ver`
-		The C# version to target.
-		Accepts parameters: version
-		Platform: cs
-	**/
-	public var CsVer = "cs-ver";
 	/**
 		Usage: `-D nocppiaast`
 		Use legacy cppia generation.
@@ -85,6 +72,11 @@ package haxe.macro;
 	**/
 	public var Debug = "debug";
 	/**
+		Usage: `-D disable-hxb-cache`
+		Use in-memory cache instead of hxb powered cache.
+	**/
+	public var DisableHxbCache = "disable-hxb-cache";
+	/**
 		Usage: `-D disable-unicode-strings`
 		Disable Unicode support in `String` type.
 		Platform: cpp
@@ -107,12 +99,6 @@ package haxe.macro;
 		Platform: cpp
 	**/
 	public var DllExport = "dll-export";
-	/**
-		Usage: `-D dll-import`
-		Handle Haxe-generated .NET DLL imports.
-		Platform: cs
-	**/
-	public var DllImport = "dll-import";
 	/**
 		Usage: `-D doc-gen`
 		Do not perform any removal/change in order to correctly generate documentation.
@@ -146,12 +132,6 @@ package haxe.macro;
 		Platform: cpp
 	**/
 	public var DynamicInterfaceClosures = "dynamic-interface-closures";
-	/**
-		Usage: `-D erase-generics`
-		Erase generic classes on C#.
-		Platform: cs
-	**/
-	public var EraseGenerics = "erase-generics";
 	/**
 		Usage: `-D eval-call-stack-depth`
 		Set maximum call stack depth for eval. (default: 1000)
@@ -191,16 +171,15 @@ package haxe.macro;
 	**/
 	public var EvalTimes = "eval-times";
 	/**
+		Usage: `-D fail-fast`
+		Abort compilation when first error occurs.
+	**/
+	public var FailFast = "fail-fast";
+	/**
 		Usage: `-D filter-times`
 		Record per-filter execution times upon --times.
 	**/
 	public var FilterTimes = "filter-times";
-	/**
-		Usage: `-D fast-cast`
-		Enables an experimental casts cleanup on C# and Java.
-		Platform: cs|java
-	**/
-	public var FastCast = "fast-cast";
 	/**
 		Usage: `-D fdb`
 		Enable full flash debug infos for FDB interactive debugging.
@@ -226,24 +205,11 @@ package haxe.macro;
 	**/
 	public var FlashUseStage = "flash-use-stage";
 	/**
-		Usage: `-D force-lib-check`
-		Force the compiler to check `--net-lib` and `--java-lib` added classes (internal).
-		force-lib-check is only here as a debug facility - compiler checking allows errors to be found more easily
-		Platform: cs|java
-	**/
-	public var ForceLibCheck = "force-lib-check";
-	/**
 		Usage: `-D force-native-property`
 		Tag all properties with `:nativeProperty` metadata for 3.1 compatibility.
 		Platform: cpp
 	**/
 	public var ForceNativeProperty = "force-native-property";
-	/**
-		Usage: `-D gencommon-debug`
-		GenCommon internal.
-		Platform: cs|java
-	**/
-	public var GencommonDebug = "gencommon-debug";
 	/**
 		Usage: `-D haxe3compat`
 		Gives warnings about transition from Haxe 3.x to Haxe 4.0.
@@ -271,12 +237,37 @@ package haxe.macro;
 	**/
 	public var HaxeNext = "haxe-next";
 	/**
+		Usage: `-D HAXE_OUTPUT_FILE`
+		Force the full output name of the executable/library without library prefix and debug suffix.
+		Accepts parameters: name
+		Platform: cpp
+	**/
+	public var HaxeOutputFile = "HAXE_OUTPUT_FILE";
+	/**
+		Usage: `-D HAXE_OUTPUT_PART`
+		Output name of the executable/library. (default: main class name)
+		Accepts parameters: name
+		Platform: cpp
+	**/
+	public var HaxeOutputPart = "HAXE_OUTPUT_PART";
+	/**
+		Usage: `-D hlc`
+		Defined by compiler when using hl/c target.
+		Platform: hl
+	**/
+	public var Hlc = "hlc";
+	/**
 		Usage: `-D hl-ver`
 		The HashLink version to target. (default: 1.10.0)
 		Accepts parameters: version
 		Platform: hl
 	**/
 	public var HlVer = "hl-ver";
+	/**
+		Usage: `-D hxb-times`
+		Display hxb timing when used with `--times`.
+	**/
+	public var HxbTimes = "hxb-times";
 	/**
 		Usage: `-D hxcpp-api-level`
 		Provided to allow compatibility between hxcpp versions.
@@ -296,6 +287,114 @@ package haxe.macro;
 	**/
 	public var HxcppDebugger = "HXCPP-DEBUGGER";
 	/**
+		Usage: `-D HXCPP-GC-MOVING`
+		Allow garbage collector to move memory to reduce fragmentation
+		Platform: cpp
+	**/
+	public var HxcppGcMoving = "HXCPP-GC-MOVING";
+	/**
+		Usage: `-D HXCPP-GC-SUMMARY`
+		Print small profiling summary at end of program
+		Platform: cpp
+	**/
+	public var HxcppGcSummary = "HXCPP-GC-SUMMARY";
+	/**
+		Usage: `-D HXCPP-GC-DYNAMIC-SIZE`
+		Monitor GC times and expand memory working space if required
+		Platform: cpp
+	**/
+	public var HxcppGcDynamicSize = "HXCPP-GC-DYNAMIC-SIZE";
+	/**
+		Usage: `-D HXCPP-GC-BIG-BLOCKS`
+		Allow working memory greater than 1 Gig
+		Platform: cpp
+	**/
+	public var HxcppGcBigBlocks = "HXCPP-GC-BIG-BLOCKS";
+	/**
+		Usage: `-D HXCPP-GC-DEBUG-LEVEL`
+		Number 1-4 indicating additional debugging in GC
+		Platform: cpp
+	**/
+	public var HxcppGcDebugLevel = "HXCPP-GC-DEBUG-LEVEL";
+	/**
+		Usage: `-D HXCPP-DEBUG-LINK`
+		Add symbols to final binary, even in release mode.
+		Platform: cpp
+	**/
+	public var HxcppDebugLink = "HXCPP-DEBUG-LINK";
+	/**
+		Usage: `-D HXCPP-STACK-TRACE`
+		Have valid function-level stack traces, even in release mode.
+		Platform: cpp
+	**/
+	public var HxcppStackTrace = "HXCPP-STACK-TRACE";
+	/**
+		Usage: `-D HXCPP-STACK-LINE`
+		Include line information in stack traces, even in release mode.
+		Platform: cpp
+	**/
+	public var HxcppStackLine = "HXCPP-STACK-LINE";
+	/**
+		Usage: `-D HXCPP-CHECK-POINTER`
+		Add null-pointer checks, even in release mode.
+		Platform: cpp
+	**/
+	public var HxcppCheckPointer = "HXCPP-CHECK-POINTER";
+	/**
+		Usage: `-D HXCPP-PROFILER`
+		Add profiler support
+		Platform: cpp
+	**/
+	public var HxcppProfiler = "HXCPP-PROFILER";
+	/**
+		Usage: `-D HXCPP-TELEMETRY`
+		Add telemetry support
+		Platform: cpp
+	**/
+	public var HxcppTelemetry = "HXCPP-TELEMETRY";
+	/**
+		Usage: `-D HXCPP-CPP11`
+		Use C++11 features and link libraries
+		Platform: cpp
+	**/
+	public var HxcppCpp11 = "HXCPP-CPP11";
+	/**
+		Usage: `-D HXCPP-VERBOSE`
+		Print extra output from build tool.
+		Platform: cpp
+	**/
+	public var HxcppVerbose = "HXCPP-VERBOSE";
+	/**
+		Usage: `-D HXCPP-TIMES`
+		Show some basic profiling information
+		Platform: cpp
+	**/
+	public var HxcppTimes = "HXCPP-TIMES";
+	/**
+		Usage: `-D HXCPP-M32`
+		Force 32-bit compile for current desktop
+		Platform: cpp
+	**/
+	public var HxcppM32 = "HXCPP-M32";
+	/**
+		Usage: `-D HXCPP-M64`
+		Force 64-bit compile for current desktop
+		Platform: cpp
+	**/
+	public var HxcppM64 = "HXCPP-M64";
+	/**
+		Usage: `-D HXCPP-ARM64`
+		Compile arm-based devices for 64 bits
+		Platform: cpp
+	**/
+	public var HxcppArm64 = "HXCPP-ARM64";
+	/**
+		Usage: `-D HXCPP-LINUX-ARM64`
+		Run on a linux ARM64 device
+		Platform: cpp
+	**/
+	public var HxcppLinuxArm64 = "HXCPP-LINUX-ARM64";
+	/**
 		Usage: `-D hxcpp-smart-strings`
 		Use wide strings in hxcpp. (Turned on by default unless `-D disable-unicode-strings` is specified.)
 		Platform: cpp
@@ -312,19 +411,6 @@ package haxe.macro;
 		The code is compiled to be run with `--interp`.
 	**/
 	public var Interp = "interp";
-	/**
-		Usage: `-D jar-legacy-loader`
-		Use the legacy loader to load .jar files on the JVM target.
-		Platform: java
-	**/
-	public var JarLegacyLoader = "jar-legacy-loader";
-	/**
-		Usage: `-D java-ver`
-		Sets the Java version to be targeted.
-		Accepts parameters: version: 5-7
-		Platform: java
-	**/
-	public var JavaVer : DefinedValue<JavaVerRange> = "java-ver";
 	/**
 		Usage: `-D js-classic`
 		Don't use a function wrapper and strict mode in JS output.
@@ -370,29 +456,17 @@ package haxe.macro;
 	**/
 	public var SourceMap = "source-map";
 	/**
-		Usage: `-D jvm`
-		Generate jvm directly.
-		Platform: java
-	**/
-	public var Jvm = "jvm";
-	/**
 		Usage: `-D jvm.compression-level`
 		Set the compression level of the generated file between 0 (no compression) and 9 (highest compression). Default: 6
-		Platform: java
+		Platform: jvm
 	**/
 	public var JvmCompressionLevel = "jvm.compression-level";
 	/**
 		Usage: `-D jvm.dynamic-level`
 		Controls the amount of dynamic support code being generated. 0 = none, 1 = field read/write optimization (default), 2 = compile-time method closures
-		Platform: java
+		Platform: jvm
 	**/
 	public var JvmDynamicLevel = "jvm.dynamic-level";
-	/**
-		Usage: `-D keep-old-output`
-		Keep old source files in the output directory.
-		Platform: cs|java
-	**/
-	public var KeepOldOutput = "keep-old-output";
 	/**
 		Usage: `-D loop-unroll-max-cost`
 		Maximum cost (number of expressions * iterations) before loop unrolling is canceled. (default: 250)
@@ -430,27 +504,6 @@ package haxe.macro;
 	**/
 	public var MacroTimes = "macro-times";
 	/**
-		Usage: `-D net-ver`
-		Sets the .NET version to be targeted.
-		Accepts parameters: version: 20-50
-		Platform: cs
-	**/
-	public var NetVer : DefinedValue<NetVerRange> = "net-ver";
-	/**
-		Usage: `-D netcore-ver`
-		Sets the .NET core version to be targeted
-		Accepts parameters: version: x.x.x
-		Platform: cs
-	**/
-	public var NetcoreVer = "netcore-ver";
-	/**
-		Usage: `-D net-target`
-		Sets the .NET target. `netcore` (.NET core), `xbox`, `micro` (Micro Framework), `compact` (Compact Framework) are some valid values. (default: `net`)
-		Accepts parameters: name
-		Platform: cs
-	**/
-	public var NetTarget = "net-target";
-	/**
 		Usage: `-D neko-source`
 		Output neko source instead of bytecode.
 		Platform: neko
@@ -477,7 +530,7 @@ package haxe.macro;
 	/**
 		Usage: `-D no-compilation`
 		Disable final compilation.
-		Platform: cs|java|cpp|hl
+		Platform: cpp|hl
 	**/
 	public var NoCompilation = "no-compilation";
 	/**
@@ -513,12 +566,6 @@ package haxe.macro;
 		@see: https://haxe.org/manual/class-field-inline.html
 	**/
 	public var KeepInlinePositions = "keep-inline-positions";
-	/**
-		Usage: `-D no-root`
-		Generate top-level types into the `haxe.root` namespace.
-		Platform: cs
-	**/
-	public var NoRoot = "no-root";
 	/**
 		Usage: `-D no-macro-cache`
 		Disable macro context caching.
@@ -576,16 +623,10 @@ package haxe.macro;
 	public var PythonVersion = "python-version";
 	/**
 		Usage: `-D real-position`
-		Disables Haxe source mapping when targetting C#, removes position comments in Java and Php output.
-		Platform: cs|java|php
+		Removes position comments in Php output.
+		Platform: php
 	**/
 	public var RealPosition = "real-position";
-	/**
-		Usage: `-D replace-files`
-		GenCommon internal.
-		Platform: cs|java
-	**/
-	public var ReplaceFiles = "replace-files";
 	/**
 		Usage: `-D retain-untyped-meta`
 		Prevents arbitrary expression metadata from being discarded upon typing.
@@ -622,7 +663,7 @@ package haxe.macro;
 	/**
 		Usage: `-D std-encoding-utf8`
 		Force utf8 encoding for stdin, stdout and stderr
-		Platform: java|cs|python
+		Platform: python
 	**/
 	public var StdEncodingUtf8 = "std-encoding-utf8";
 	/**
@@ -701,12 +742,6 @@ package haxe.macro;
 	**/
 	public var Sys = "sys";
 	/**
-		Usage: `-D unsafe`
-		Allow unsafe code when targeting C#.
-		Platform: cs
-	**/
-	public var Unsafe = "unsafe";
-	/**
 		Usage: `-D use-nekoc`
 		Use `nekoc` compiler instead of the internal one.
 		Platform: neko
@@ -735,7 +770,7 @@ package haxe.macro;
 	public var NoTre = "no-tre";
 	/**
 		Usage: `-D message.reporting`
-		Select message reporting mode for compiler output. (default: classic)
+		Select message reporting mode for compiler output. (default: pretty)
 		Accepts parameters: mode: classic | pretty | indent
 	**/
 	public var MessageReporting : DefinedValue<MessageReportingValues> = "message.reporting";
@@ -744,6 +779,11 @@ package haxe.macro;
 		Disable ANSI color codes in message reporting.
 	**/
 	public var MessageNoColor = "message.no-color";
+	/**
+		Usage: `-D message.absolute-positions`
+		Use absolute character positions instead of line/columns for message reporting.
+	**/
+	public var MessageAbsolutePositions = "message.absolute-positions";
 	/**
 		Usage: `-D message.log-file`
 		Path to a text file to write message reporting to, in addition to regular output.
@@ -916,14 +956,6 @@ enum abstract DumpValues(String) from String to String to Defines {
 	public var Position = "position";
 	public var Legacy = "legacy";
 }
-enum abstract JavaVerRange(String) from String to String to Defines {
-	public static inline function get(self:DefinedValue<JavaVerRange>):Null<JavaVerRange> {
-		return haxe.macro.Context.definedValue(self);
-	}
-	public var Version5 = "5";
-	public var Version6 = "6";
-	public var Version7 = "7";
-}
 enum abstract JsEsValues(String) from String to String to Defines {
 	public static inline function get(self:DefinedValue<JsEsValues>):Null<JsEsValues> {
 		return haxe.macro.Context.definedValue(self);
@@ -931,42 +963,6 @@ enum abstract JsEsValues(String) from String to String to Defines {
 	public var Version3 = "3";
 	public var Version5 = "5";
 	public var Version6 = "6";
-}
-enum abstract NetVerRange(String) from String to String to Defines {
-	public static inline function get(self:DefinedValue<NetVerRange>):Null<NetVerRange> {
-		return haxe.macro.Context.definedValue(self);
-	}
-	public var Version20 = "20";
-	public var Version21 = "21";
-	public var Version22 = "22";
-	public var Version23 = "23";
-	public var Version24 = "24";
-	public var Version25 = "25";
-	public var Version26 = "26";
-	public var Version27 = "27";
-	public var Version28 = "28";
-	public var Version29 = "29";
-	public var Version30 = "30";
-	public var Version31 = "31";
-	public var Version32 = "32";
-	public var Version33 = "33";
-	public var Version34 = "34";
-	public var Version35 = "35";
-	public var Version36 = "36";
-	public var Version37 = "37";
-	public var Version38 = "38";
-	public var Version39 = "39";
-	public var Version40 = "40";
-	public var Version41 = "41";
-	public var Version42 = "42";
-	public var Version43 = "43";
-	public var Version44 = "44";
-	public var Version45 = "45";
-	public var Version46 = "46";
-	public var Version47 = "47";
-	public var Version48 = "48";
-	public var Version49 = "49";
-	public var Version50 = "50";
 }
 enum abstract SwfCompressLevelRange(String) from String to String to Defines {
 	public static inline function get(self:DefinedValue<SwfCompressLevelRange>):Null<SwfCompressLevelRange> {
